@@ -3,6 +3,7 @@ const cors = require("cors");
 const axios = require("axios");
 require("dotenv").config();
 const generatePrompt = require("./generatePrompt");
+const sessionLogger = require("./sessionLogger");
 
 // Server setup and configuration
 const app = express();
@@ -98,6 +99,20 @@ app.post("/api/interview", async (req, res) => {
       .status(500)
       .json({ error: "Failed to generate response", details: error.message });
   }
+
+
 });
 
+/**
+ * Save Chat History endpoint - setting job title sets timestamp
+ * Processes user input and returns AI-generated interviewer responses
+ */
+app.post("/api/save-session", async (req, res) => {
+  const { jobTitle } = req.body;
+  const time = new Date();
+  // const stamp = `${time.getFullYear}${time.getMonth()}${time.getDate()}`;
+  console.log(`Job title set: ${jobTitle} at ${timestamp.toLocaleTimeString}`);
+  sessionLogger(jobTitle )
+
+});
 module.exports = app;

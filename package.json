@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "time": "date +%Y%m%d_%H%M%S"
   },
   "repository": {
     "type": "git",
