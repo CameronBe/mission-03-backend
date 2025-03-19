@@ -23,6 +23,18 @@ const generateBasePrompt = (jobTitle, messageHistory) => {
     };
   }
 
+  if (!jobTitle || typeof jobTitle !== "string") {
+    return {
+      error: `The provided input jobTitle is invalid, but should be a non-empty string.`,
+    };
+  }
+
+  if (!Array.isArray(messageHistory) || messageHistory.length === 0) {
+    return {
+      error: `The provided input messageHistory is invalid, but should be a non-empty array.`,
+    };
+  }
+
   return `You are an AI interviewer for a ${jobTitle} position.
           You should also make the candidate laugh.
           The candidate's previous responses are:
@@ -41,6 +53,12 @@ const generateEvaluationPrompt = (basePrompt) => {
   if (typeof basePrompt == "number") {
     return {
       error: `The provided input basePrompt ${basePrompt} is a number, but should be a string.`,
+    };
+  }
+
+  if (!basePrompt || typeof basePrompt !== "string") {
+    return {
+      error: `The provided input basePrompt is invalid, but should be a non-empty string.`,
     };
   }
 
@@ -73,6 +91,18 @@ const generateQuestionPrompt = (basePrompt, userMessage) => {
   if (typeof userMessage == "number") {
     return {
       error: `The provided input userMessage ${userMessage} is a number, but should be a string.`,
+    };
+  }
+
+  if (!basePrompt || typeof basePrompt !== "string") {
+    return {
+      error: `The provided input basePrompt is invalid, but should be a non-empty string.`,
+    };
+  }
+
+  if (!userMessage || typeof userMessage !== "string") {
+    return {
+      error: `The provided input userMessage is invalid, but should be a non-empty string.`,
     };
   }
 
