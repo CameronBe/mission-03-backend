@@ -47,6 +47,24 @@ const generatePrompt = (jobTitle, userMessage, messageHistory) => {
     };
   }
 
+  if (!jobTitle || typeof jobTitle !== "string") {
+    return {
+      error: `The provided input jobTitle is invalid, but should be a non-empty string.`,
+    };
+  }
+
+  if (!userMessage || typeof userMessage !== "string") {
+    return {
+      error: `The provided input userMessage is invalid, but should be a non-empty string.`,
+    };
+  }
+
+  if (!Array.isArray(messageHistory) || messageHistory.length === 0) {
+    return {
+      error: `The provided input messageHistory is invalid, but should be a non-empty array.`,
+    };
+  }
+
   const questionCount = messageHistory.filter(
     (messageHistoryItem) => messageHistoryItem.role === "model"
   ).length;

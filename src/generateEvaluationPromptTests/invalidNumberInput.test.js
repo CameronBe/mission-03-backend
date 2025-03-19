@@ -1,7 +1,7 @@
 const { generateEvaluationPrompt } = require("../promptUtils");
 
 describe("generateEvaluationPromptTest (invalid number input)", () => {
-  test.each([1, 2, 3])(
+  test.each([0, -1, 42, 100, 999])(
     "Should return an error object if the provided input basePrompt is a number (%s)",
     (basePrompt) => {
       const actualOutput = generateEvaluationPrompt(basePrompt);
