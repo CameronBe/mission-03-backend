@@ -11,7 +11,45 @@ const {
  * @param {Array} messageHistory - Previous conversation history
  */
 const generatePrompt = (jobTitle, userMessage, messageHistory) => {
-  const questionCount = messageHistory.filter((m) => m.role === "model").length;
+  if (typeof jobTitle == "boolean") {
+    return {
+      error: `The provided input jobTitle ${jobTitle} is a boolean, but should be a string.`,
+    };
+  }
+
+  if (typeof userMessage == "boolean") {
+    return {
+      error: `The provided input userMessage ${userMessage} is a boolean, but should be a string.`,
+    };
+  }
+
+  if (typeof messageHistory == "boolean") {
+    return {
+      error: `The provided input messageHistory ${messageHistory} is a boolean, but should be an array.`,
+    };
+  }
+
+  if (typeof jobTitle == "number") {
+    return {
+      error: `The provided input jobTitle ${jobTitle} is a number, but should be a string.`,
+    };
+  }
+
+  if (typeof userMessage == "number") {
+    return {
+      error: `The provided input userMessage ${userMessage} is a number, but should be a string.`,
+    };
+  }
+
+  if (typeof messageHistory == "number") {
+    return {
+      error: `The provided input messageHistory ${messageHistory} is a number, but should be an array.`,
+    };
+  }
+
+  const questionCount = messageHistory.filter(
+    (messageHistoryItem) => messageHistoryItem.role === "model"
+  ).length;
   const basePrompt = generateBasePrompt(jobTitle, messageHistory);
 
   if (questionCount >= 6) {

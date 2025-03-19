@@ -1,4 +1,28 @@
 const generateBasePrompt = (jobTitle, messageHistory) => {
+  if (typeof jobTitle == "boolean") {
+    return {
+      error: `The provided input jobTitle ${jobTitle} is a boolean, but should be a string.`,
+    };
+  }
+
+  if (typeof messageHistory == "boolean") {
+    return {
+      error: `The provided input messageHistory ${messageHistory} is a boolean, but should be an array.`,
+    };
+  }
+
+  if (typeof jobTitle == "number") {
+    return {
+      error: `The provided input jobTitle ${jobTitle} is a number, but should be a string.`,
+    };
+  }
+
+  if (typeof messageHistory == "number") {
+    return {
+      error: `The provided input messageHistory ${messageHistory} is a number, but should be an array.`,
+    };
+  }
+
   return `You are an AI interviewer for a ${jobTitle} position.
           You should also make the candidate laugh.
           The candidate's previous responses are:
@@ -8,6 +32,18 @@ const generateBasePrompt = (jobTitle, messageHistory) => {
 };
 
 const generateEvaluationPrompt = (basePrompt) => {
+  if (typeof basePrompt == "boolean") {
+    return {
+      error: `The provided input basePrompt ${basePrompt} is a boolean, but should be a string.`,
+    };
+  }
+
+  if (typeof basePrompt == "number") {
+    return {
+      error: `The provided input basePrompt ${basePrompt} is a number, but should be a string.`,
+    };
+  }
+
   return `${basePrompt}
           Based on the candidate's responses in the interview, provide a detailed evaluation of their performance.
           Include specific strengths, areas for improvement, and actionable suggestions.
@@ -16,6 +52,30 @@ const generateEvaluationPrompt = (basePrompt) => {
 };
 
 const generateQuestionPrompt = (basePrompt, userMessage) => {
+  if (typeof basePrompt == "boolean") {
+    return {
+      error: `The provided input basePrompt ${basePrompt} is a boolean, but should be a string.`,
+    };
+  }
+
+  if (typeof userMessage == "boolean") {
+    return {
+      error: `The provided input userMessage ${userMessage} is a boolean, but should be a string.`,
+    };
+  }
+
+  if (typeof basePrompt == "number") {
+    return {
+      error: `The provided input basePrompt ${basePrompt} is a number, but should be a string.`,
+    };
+  }
+
+  if (typeof userMessage == "number") {
+    return {
+      error: `The provided input userMessage ${userMessage} is a number, but should be a string.`,
+    };
+  }
+
   return `${basePrompt}
           The candidate just said: "${userMessage}".
           What is your next question for the candidate?
