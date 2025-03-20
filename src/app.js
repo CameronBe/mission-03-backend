@@ -4,6 +4,7 @@ const axios = require("axios");
 require("dotenv").config();
 const generatePrompt = require("./generatePrompt");
 const sessionLogger = require("./sessionLogger");
+const saveChatHistory = require("./saveChatHistory");
 
 // Server setup and configuration
 const app = express();
@@ -29,10 +30,13 @@ app.post("/api/interview", async (req, res) => {
   const { jobTitle, messageHistory } = req.body;
 
   // Debug logging for message history
-  console.log(
-    "Received messageHistory:",
-    JSON.stringify(messageHistory, null, 2)
-  );
+  if (process.env.DEBUG === true) { 
+    console.log(
+      "Received messageHistory:",
+      JSON.stringify(messageHistory, null, 2)
+    );
+  }
+ 
 
   try {
     // Validate message history format
@@ -107,12 +111,17 @@ app.post("/api/interview", async (req, res) => {
  * Save Chat History endpoint - setting job title sets timestamp
  * Processes user input and returns AI-generated interviewer responses
  */
-app.post("/api/save-session", async (req, res) => {
+app.post("/api/start-session", async (req, res) => {
   const { jobTitle } = req.body;
-  const time = new Date();
-  // const stamp = `${time.getFullYear}${time.getMonth()}${time.getDate()}`;
-  console.log(`Job title set: ${jobTitle} at ${timestamp.toLocaleTimeString}`);
-  sessionLogger(jobTitle )
+  sessionID =  sessionLogger(jobTitle );
+  res.status(200).send(sessionID);
 
 });
+app.post("/api/save-session", async (req, res) => {
+  const { jobTitle, messageHistory, sessionID } = req.body;
+  // saveChatHistory(jobTitle, messageHistory, sessionID);
+  res.status(200).send(messageHistory);
+});
+
+
 module.exports = app;
