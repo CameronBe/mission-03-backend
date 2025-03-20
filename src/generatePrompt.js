@@ -68,6 +68,7 @@ const generatePrompt = (jobTitle, userMessage, messageHistory) => {
   const questionCount = messageHistory.filter(
     (messageHistoryItem) => messageHistoryItem.role === "model"
   ).length;
+
   const basePrompt = generateBasePrompt(jobTitle, messageHistory);
 
   if (questionCount >= 6) {

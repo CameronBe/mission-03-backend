@@ -72,14 +72,15 @@ app.post("/api/interview", async (req, res) => {
       // Validate and extract AI response
       const aiResponse =
         response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
       if (aiResponse) {
         res.json({ reply: aiResponse });
-      } else {
-        console.error("Unexpected Gemini API response:", response.data);
-        return res
-          .status(500)
-          .json({ error: "Unexpected Gemini API response format" });
       }
+
+      console.error("Unexpected Gemini API response:", response.data);
+      return res
+        .status(500)
+        .json({ error: "Unexpected Gemini API response format" });
     } catch (apiError) {
       // Handle Gemini API specific errors
       console.error(
