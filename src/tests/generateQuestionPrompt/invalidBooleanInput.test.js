@@ -1,4 +1,4 @@
-const { generateQuestionPrompt } = require("../promptUtils");
+const { generateQuestionPrompt } = require("../../promptUtils");
 
 describe("generateQuestionPromptTest (invalid boolean input)", () => {
   test.each([true, false])(

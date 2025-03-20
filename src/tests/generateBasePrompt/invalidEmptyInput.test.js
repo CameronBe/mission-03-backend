@@ -1,4 +1,4 @@
-const { generateBasePrompt } = require("../promptUtils");
+const { generateBasePrompt } = require("../../promptUtils");
 
 describe("generateBasePromptTest (invalid empty input)", () => {
   test.each(["", {}, [], null, undefined])(

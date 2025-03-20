@@ -1,8 +1,8 @@
-const generatePrompt = require("../generatePrompt");
+const generatePrompt = require("../../generatePrompt");
 
-describe("generatePromptTest (invalid number input)", () => {
-  test.each([0, -1, 42, 100, 999])(
-    "Should return an error object if the provided input jobTitle is a number (%s)",
+describe("generatePromptTest (invalid empty input)", () => {
+  test.each(["", {}, [], null, undefined])(
+    "Should return an error object if the provided input jobTitle is an invalid empty input (%s)",
     (jobTitle) => {
       const actualOutput = generatePrompt(jobTitle, "userMessage", [
         {
@@ -18,15 +18,15 @@ describe("generatePromptTest (invalid number input)", () => {
       ]);
 
       const expectedOutput = {
-        error: `The provided input jobTitle ${jobTitle} is a number, but should be a string.`,
+        error: `The provided input jobTitle is invalid, but should be a non-empty string.`,
       };
 
       expect(actualOutput).toEqual(expectedOutput);
     }
   );
 
-  test.each([0, -1, 42, 100, 999])(
-    "Should return an error object if the provided input userMessage is a number (%s)",
+  test.each(["", {}, [], null, undefined])(
+    "Should return an error object if the provided input userMessage is an invalid empty input (%s)",
     (userMessage) => {
       const actualOutput = generatePrompt("jobTitle", userMessage, [
         {
@@ -42,15 +42,15 @@ describe("generatePromptTest (invalid number input)", () => {
       ]);
 
       const expectedOutput = {
-        error: `The provided input userMessage ${userMessage} is a number, but should be a string.`,
+        error: `The provided input userMessage is invalid, but should be a non-empty string.`,
       };
 
       expect(actualOutput).toEqual(expectedOutput);
     }
   );
 
-  test.each([1, 2, 3])(
-    "Should return an error object if the provided input messageHistory is a number (%s)",
+  test.each(["", {}, [], null, undefined])(
+    "Should return an error object if the provided input messageHistory is an invalid empty input (%s)",
     (messageHistory) => {
       const actualOutput = generatePrompt(
         "jobTitle",
@@ -59,7 +59,7 @@ describe("generatePromptTest (invalid number input)", () => {
       );
 
       const expectedOutput = {
-        error: `The provided input messageHistory ${messageHistory} is a number, but should be an array.`,
+        error: `The provided input messageHistory is invalid, but should be a non-empty array.`,
       };
 
       expect(actualOutput).toEqual(expectedOutput);
