@@ -1,8 +1,8 @@
-const {
+import {
   generateBasePrompt,
   generateEvaluationPrompt,
   generateQuestionPrompt,
-} = require("./promptUtils");
+} from "./promptUtils";
 
 /**
  * Generates the prompt for the AI based on interview context
@@ -77,4 +77,4 @@ const generatePrompt = (jobTitle, userMessage, messageHistory) => {
   return generateQuestionPrompt(basePrompt, userMessage);
 };
 
-module.exports = generatePrompt;
+export default generatePrompt;

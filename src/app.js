@@ -1,10 +1,12 @@
-const express = require("express");
-const cors = require("cors");
-const axios = require("axios");
-require("dotenv").config();
-const generatePrompt = require("./generatePrompt");
-const sessionLogger = require("./sessionLogger");
-const saveChatHistory = require("./saveChatHistory");
+import express from "express";
+import cors from "cors";
+import axios from "axios";
+import dotenv from "dotenv";
+import generatePrompt from "./generatePrompt.js";
+import sessionLogger from "./sessionLogger.js";
+import saveChatHistory from "./saveChatHistory.js";
+
+dotenv.config();
 
 // Server setup and configuration
 const app = express();
@@ -47,7 +49,7 @@ app.post("/api/interview", async (req, res) => {
       return res.status(400).json({ error: "Invalid message history format" });
     }
 
-    // Generate AI prompt based on context
+    // Generate AI prompt based on context 
     const prompt = generatePrompt(jobTitle, lastMessageText, messageHistory);
 
     console.log("Generated Prompt:", prompt);
@@ -70,13 +72,15 @@ app.post("/api/interview", async (req, res) => {
           },
         }
       );
+      // Tom's snitchy little logger
+      console.log(`sessionID: ${sessionID}`);
+      saveChatHistory(response.data, sessionID);
 
       // Debug logging for AI response
       console.log("Gemini Result:", JSON.stringify(response.data, null, 2));
 
       // Validate and extract AI response
-      const aiResponse =
-        response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      const aiResponse =  response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
       if (aiResponse) {
         res.json({ reply: aiResponse });
       } else {
@@ -115,13 +119,11 @@ app.post("/api/start-session", async (req, res) => {
   const { jobTitle } = req.body;
   sessionID =  sessionLogger(jobTitle );
   res.status(200).send(sessionID);
-
 });
 app.post("/api/save-session", async (req, res) => {
   const { jobTitle, messageHistory, sessionID } = req.body;
-  // saveChatHistory(jobTitle, messageHistory, sessionID);
+  saveChatHistory(jobTitle, messageHistory, sessionID);
   res.status(200).send(messageHistory);
 });
 
-
-module.exports = app;
+export default app;

@@ -1,4 +1,4 @@
-const generateBasePrompt = (jobTitle, messageHistory) => {
+export const generateBasePrompt = (jobTitle, messageHistory) => {
   if (typeof jobTitle == "boolean") {
     return {
       error: `The provided input jobTitle ${jobTitle} is a boolean, but should be a string.`,
@@ -43,7 +43,7 @@ const generateBasePrompt = (jobTitle, messageHistory) => {
             .join("\n")}`;
 };
 
-const generateEvaluationPrompt = (basePrompt) => {
+export const generateEvaluationPrompt = (basePrompt) => {
   if (typeof basePrompt == "boolean") {
     return {
       error: `The provided input basePrompt ${basePrompt} is a boolean, but should be a string.`,
@@ -69,7 +69,7 @@ const generateEvaluationPrompt = (basePrompt) => {
           **Provide a summary of how well you think the user did in the interview.**`;
 };
 
-const generateQuestionPrompt = (basePrompt, userMessage) => {
+export const generateQuestionPrompt = (basePrompt, userMessage) => {
   if (typeof basePrompt == "boolean") {
     return {
       error: `The provided input basePrompt ${basePrompt} is a boolean, but should be a string.`,
@@ -112,10 +112,4 @@ const generateQuestionPrompt = (basePrompt, userMessage) => {
           Keep the question concise and relevant to the conversation.
           Do not repeat previous questions.
           Do not provide canned scenarios or pre-defined questions.`;
-};
-
-module.exports = {
-  generateBasePrompt,
-  generateEvaluationPrompt,
-  generateQuestionPrompt,
 };
