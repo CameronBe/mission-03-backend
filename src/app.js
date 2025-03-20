@@ -1,14 +1,19 @@
 const express = require("express");
 const cors = require("cors");
-const axios = require("axios");
 require("dotenv").config();
 const generatePrompt = require("./generatePrompt");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // Server setup and configuration
 const app = express();
 
 // Initialize Google Gemini AI with API key from .env file
 const apiKey = process.env.GOOGLE_API_KEY;
+const genAI = new GoogleGenerativeAI(apiKey);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.0-flash",
+});
 
 // AI model configuration for response generation
 const generationConfig = {
@@ -58,34 +63,23 @@ app.post("/api/interview", async (req, res) => {
     console.log("Generated Prompt:", prompt);
 
     try {
-      // Call Gemini AI API for response generation
-      const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-        {
-          contents: [
-            {
-              parts: [{ text: prompt }],
-            },
-          ],
-          generationConfig,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      // Start a chat session and send the prompt
+      const chatSession = model.startChat({
+        generationConfig,
+        history: [],
+      });
+
+      const result = await chatSession.sendMessage(prompt);
 
       // Debug logging for AI response
-      console.log("Gemini Result:", JSON.stringify(response.data, null, 2));
+      console.log("Gemini Result:", result.response.text());
 
       // Validate and extract AI response
-      const aiResponse =
-        response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      const aiResponse = result.response.text();
       if (aiResponse) {
         return res.json({ reply: aiResponse });
       }
-      console.error("Unexpected Gemini API response:", response.data);
+      console.error("Unexpected Gemini API response:", result);
       return res
         .status(500)
         .json({ error: "Unexpected Gemini API response format" });
