@@ -39,7 +39,10 @@ const generateBasePrompt = (jobTitle, messageHistory) => {
           You should also make the candidate laugh.
           The candidate's previous responses are:
           ${messageHistory
-            .map((m) => `${m.role}: ${m.parts[0].text}`)
+            .map(
+              (messageHistoryItem) =>
+                `${messageHistoryItem.role}: ${messageHistoryItem.parts[0].text}`
+            )
             .join("\n")}`;
 };
 
