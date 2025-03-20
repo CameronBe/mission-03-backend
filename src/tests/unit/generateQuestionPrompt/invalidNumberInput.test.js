@@ -1,4 +1,4 @@
-const { generateQuestionPrompt } = require("../../promptUtils");
+const { generateQuestionPrompt } = require("../../../promptUtils");
 
 describe("generateQuestionPromptTest (invalid number input)", () => {
   test.each([0, -1, 42, 100, 999])(

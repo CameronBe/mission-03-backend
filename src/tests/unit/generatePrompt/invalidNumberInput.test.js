@@ -1,4 +1,4 @@
-const generatePrompt = require("../../generatePrompt");
+const generatePrompt = require("../../../generatePrompt");
 
 describe("generatePromptTest (invalid number input)", () => {
   test.each([0, -1, 42, 100, 999])(

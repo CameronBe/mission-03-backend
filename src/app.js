@@ -34,6 +34,16 @@ app.post("/api/interview", async (req, res) => {
   );
 
   try {
+    // Validate request body
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({ error: "Invalid request body" });
+    }
+
+    // Validate jobTitle
+    if (!jobTitle) {
+      return res.status(400).json({ error: "Missing job title" });
+    }
+
     // Validate message history format
     const lastMessageText =
       messageHistory?.[messageHistory.length - 1]?.parts?.[0]?.text;
@@ -72,11 +82,9 @@ app.post("/api/interview", async (req, res) => {
       // Validate and extract AI response
       const aiResponse =
         response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
       if (aiResponse) {
-        res.json({ reply: aiResponse });
+        return res.json({ reply: aiResponse });
       }
-
       console.error("Unexpected Gemini API response:", response.data);
       return res
         .status(500)

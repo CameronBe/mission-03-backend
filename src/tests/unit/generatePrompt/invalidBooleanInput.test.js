@@ -1,8 +1,7 @@
-const generatePrompt = require("../../generatePrompt");
-
-describe("generatePromptTest (invalid empty input)", () => {
-  test.each(["", {}, [], null, undefined])(
-    "Should return an error object if the provided input jobTitle is an invalid empty input (%s)",
+const generatePrompt = require("../../../generatePrompt");
+describe("generatePromptTest (invalid boolean input)", () => {
+  test.each([true, false])(
+    "Should return an error object if the provided input jobTitle is a boolean (%s)",
     (jobTitle) => {
       const actualOutput = generatePrompt(jobTitle, "userMessage", [
         {
@@ -16,17 +15,14 @@ describe("generatePromptTest (invalid empty input)", () => {
           ],
         },
       ]);
-
       const expectedOutput = {
-        error: `The provided input jobTitle is invalid, but should be a non-empty string.`,
+        error: `The provided input jobTitle ${jobTitle} is a boolean, but should be a string.`,
       };
-
       expect(actualOutput).toEqual(expectedOutput);
     }
   );
-
-  test.each(["", {}, [], null, undefined])(
-    "Should return an error object if the provided input userMessage is an invalid empty input (%s)",
+  test.each([true, false])(
+    "Should return an error object if the provided input userMessage is a boolean (%s)",
     (userMessage) => {
       const actualOutput = generatePrompt("jobTitle", userMessage, [
         {
@@ -40,28 +36,23 @@ describe("generatePromptTest (invalid empty input)", () => {
           ],
         },
       ]);
-
       const expectedOutput = {
-        error: `The provided input userMessage is invalid, but should be a non-empty string.`,
+        error: `The provided input userMessage ${userMessage} is a boolean, but should be a string.`,
       };
-
       expect(actualOutput).toEqual(expectedOutput);
     }
   );
-
-  test.each(["", {}, [], null, undefined])(
-    "Should return an error object if the provided input messageHistory is an invalid empty input (%s)",
+  test.each([true, false])(
+    "Should return an error object if the provided input messageHistory is a boolean (%s)",
     (messageHistory) => {
       const actualOutput = generatePrompt(
         "jobTitle",
         "userMessage",
         messageHistory
       );
-
       const expectedOutput = {
-        error: `The provided input messageHistory is invalid, but should be a non-empty array.`,
+        error: `The provided input messageHistory ${messageHistory} is a boolean, but should be an array.`,
       };
-
       expect(actualOutput).toEqual(expectedOutput);
     }
   );

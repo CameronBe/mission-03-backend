@@ -1,4 +1,4 @@
-const { generateEvaluationPrompt } = require("../../promptUtils");
+const { generateEvaluationPrompt } = require("../../../promptUtils");
 
 describe("generateEvaluationPromptTest (invalid boolean input)", () => {
   test.each([true, false])(

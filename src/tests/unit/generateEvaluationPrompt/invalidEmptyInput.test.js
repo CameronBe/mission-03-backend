@@ -1,4 +1,4 @@
-const { generateEvaluationPrompt } = require("../../promptUtils");
+const { generateEvaluationPrompt } = require("../../../promptUtils");
 
 describe("generateEvaluationPromptTest (invalid empty input)", () => {
   test.each(["", {}, [], null, undefined])(
